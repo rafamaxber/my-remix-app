@@ -26,7 +26,7 @@ jobs:
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build docker image
-        run: docker build -t rafamaxber/dracma-test .
+        run: ./docker/build.sh
 
       - name: Push image docker
         run: docker push rafamaxber/dracma-test

@@ -6,9 +6,9 @@
             "args"        : "start",
             "instances"   : "max",
             "exec_mode"   : "cluster",
-            "watch"       : false,
+            "watch"       : true,
             "merge_logs"  : true,
-            "cwd"         : "/app/",
+            "cwd"         : "/myapp/",
             "env_production" : {
                 "NODE_ENV": process.env.NODE_ENV,
                 "INSTANCE": process.env.INSTANCE
