@@ -26,7 +26,7 @@ jobs:
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build docker image
-        run: ./docker/build.sh
+        run: docker build --no-cache -t rafamaxber/remix_web_app -f docker/nginx/Dockerfile .
 
       - name: Push image docker
         run: docker push rafamaxber/remix_web_app
