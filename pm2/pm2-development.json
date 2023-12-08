@@ -1,0 +1,18 @@
+{
+    "apps": [
+        {
+            "name"        : "remix_web_app",
+            "script"      : "npm",
+            "args"        : "start",
+            "instances"   : "max",
+            "exec_mode"   : "cluster",
+            "watch"       : false,
+            "merge_logs"  : true,
+            "cwd"         : "/app/",
+            "env_production" : {
+                "NODE_ENV": process.env.NODE_ENV,
+                "INSTANCE": process.env.INSTANCE
+            }
+        }
+    ]
+}
