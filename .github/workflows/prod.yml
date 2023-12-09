@@ -30,3 +30,16 @@ jobs:
 
       - name: Push image docker
         run: docker push rafamaxber/remix_web_app
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull rafamaxber/remix_web_app:latest
+
+      - name: Remove docker container
+        run: docker rm -f deploy_ghactions_remix_web_app
+
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 -p 3000:3000 --name deploy_ghactions_remix_web_app rafamaxber/remix_web_app
