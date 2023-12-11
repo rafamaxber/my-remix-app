@@ -42,4 +42,4 @@ jobs:
         run: docker rm -f deploy_ghactions_remix_web_app
 
       - name: Run docker container
-        run: docker run -d -p 8080:8080 -p 3000:3000 --name deploy_ghactions_remix_web_app rafamaxber/remix_web_app
+        run: docker run -d -p 80:3000 --name deploy_ghactions_remix_web_app rafamaxber/remix_web_app
