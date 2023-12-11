@@ -1,32 +1,31 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
+
+export interface Post {
+  userId: number
+  id: number
+  title: string
+  body: string
+}
+
+
 export const loader = async () => {
-  return json({
-    posts: [
-      {
-        slug: "my-first-post",
-        title: "My First Post",
-      },
-      {
-        slug: "90s-mixtape",
-        title: "A Mixtape I Made Just For You",
-      },
-    ],
-  });
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  return json<Post[]>(await res.json());
 };
 
 export default function Posts() {
-  const { posts } = useLoaderData<typeof loader>();
+  const posts = useLoaderData<typeof loader>();
 
   return (
     <main>
       <h1>Posts</h1>
       <ul>
         {posts.map((post) => (
-          <li key={post.slug}>
+          <li key={post.userId}>
             <Link
-              to={post.slug}
+              to={post.userId.toString()}
               className="text-blue-600 underline"
             >
               {post.title}
