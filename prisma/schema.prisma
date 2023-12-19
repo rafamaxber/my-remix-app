@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id            Int            @id @default(autoincrement())
+  tenantId      Int
+  customerId    Int
+  type          String
+  document      String
+  operation     String
+  nature        String
+  seller        Int
+  payment       String
+  paymentStatus String
+  note          String?
+  total         Float
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  orderProducts OrderProduct[]
+}
+
+model OrderProduct {
+  id         Int      @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  producList Product  @relation(fields: [productId], references: [id])
+  quantity   Int
+  price      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  order      Order    @relation(fields: [orderId], references: [id])
+}
+
+model Category {
+  tenantId  Int
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Product {
+  tenantId           Int
+  id                 Int                 @id @default(autoincrement())
+  categoryId         Int
+  category           Category            @relation(fields: [categoryId], references: [id])
+  name               String
+  price_sell         Float
+  price_cost         Float
+  manufacturer       Int?
+  barcode            String?
+  status             String
+  quantity           Int
+  description        String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  images             ProductImages[]
+  productTributation ProductTributation?
+  OrderProduct       OrderProduct[]
+}
+
+model ProductImages {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model ProductTributation {
+  id                            Int      @id @default(autoincrement())
+  origem                        String?
+  codigoNcm                     String?
+  cest                          String?
+  icmsSimples                   String?
+  codigoBeneficioFiscal         String?
+  ipi_cst_saida                 String?
+  ipi_enquadramento             String?
+  pis_cst                       String?
+  cofins_cst                    String?
+  icms_geral                    String?
+  icms_estado                   String?
+  base_calculo_st_retido        String?
+  valor_st_retido               String?
+  percentual_st_retido_mais_fcp String?
+  base_calculo_fc_st_retido     String?
+  percentual_fcp_st_retido      String?
+  valor_de_fcp_st_retido        String?
+  valor_icms_substituto         String?
+  data_imposto                  String?
+  icms                          Float?
+  pis                           Float?
+  cofins                        Float?
+  ipi                           Float?
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+  product                       Product  @relation(fields: [productId], references: [id])
+  productId                     Int      @unique
+}
