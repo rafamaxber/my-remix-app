@@ -1,5 +1,6 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { Button } from "~/components/ui/button";
 
 
 export interface Post {
@@ -33,6 +34,8 @@ export default function Posts() {
           </li>
         ))}
       </ul>
+
+      <Button>Click me</Button>
     </main>
   );
 }
